@@ -1,4 +1,4 @@
-library dynamic_widget;
+library jsonwidget;
 
 import 'dart:convert';
 
