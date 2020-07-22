@@ -37,18 +37,20 @@ class TextFieldWidgetParser extends WidgetParser {
       inputDecoration = getInputDecoration(map['inputDecoration']);
     }
 
-    FormBuilderTextField formBuilderTextField = FormBuilderTextField(
-      attribute: attribute,
-      textInputAction: textInputAction,
-      keyboardType: keyboardType,
-      decoration: inputDecoration,
-      validators: validators,
-      obscureText: obscureText,
-      maxLines: maxLines,
-      onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
+    FormBuilder formBuilder = FormBuilder(
+      child: FormBuilderTextField(
+        attribute: attribute,
+        textInputAction: textInputAction,
+        keyboardType: keyboardType,
+        decoration: inputDecoration,
+        validators: validators,
+        obscureText: obscureText,
+        maxLines: maxLines,
+        onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
+      ),
     );
 
-    return formBuilderTextField;
+    return formBuilder;
   }
 
   getInputDecoration(Map<String, dynamic> map) {
