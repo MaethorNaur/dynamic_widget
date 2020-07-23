@@ -13,7 +13,7 @@ class RaisedButtonParser extends WidgetParser {
       {GlobalKey<State<StatefulWidget>> stateKey}) {
     ClickEvent clickEvent = map.containsKey("clickEvent")
         ? ClickEvent.fromJson(map['clickEvent'])
-        : ClickEvent(EventType.NOT_DEFINED, null);
+        : ClickEvent(EventType.NOT_DEFINED);
 
     var raisedButton = RaisedButton(
       color: map.containsKey('color') ? parseHexColor(map['color']) : null,
@@ -38,7 +38,7 @@ class RaisedButtonParser extends WidgetParser {
           map['child'], buildContext, listener,
           stateKey: stateKey),
       onPressed: () {
-        listener.onClicked(clickEvent.eventType);
+        listener.onClicked(clickEvent);
       },
     );
 

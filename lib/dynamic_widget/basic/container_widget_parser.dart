@@ -25,7 +25,7 @@ class ContainerWidgetParser extends WidgetParser {
 
     ClickEvent clickEvent = map.containsKey("clickEvent")
         ? ClickEvent.fromJson(map['clickEvent'])
-        : ClickEvent(EventType.NOT_DEFINED, null);
+        : ClickEvent(EventType.NOT_DEFINED);
 
     var containerWidget = Container(
       alignment: alignment,
@@ -41,7 +41,7 @@ class ContainerWidgetParser extends WidgetParser {
     if (listener != null && clickEvent != null) {
       return GestureDetector(
         onTap: () {
-          listener.onClicked(clickEvent.eventType);
+          listener.onClicked(clickEvent);
         },
         child: containerWidget,
       );

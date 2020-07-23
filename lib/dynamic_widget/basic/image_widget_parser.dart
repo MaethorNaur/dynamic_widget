@@ -46,7 +46,7 @@ class AssetImageWidgetParser extends WidgetParser {
 
     ClickEvent clickEvent = map.containsKey("clickEvent")
         ? ClickEvent.fromJson(map['clickEvent'])
-        : ClickEvent(EventType.NOT_DEFINED, null);
+        : ClickEvent(EventType.NOT_DEFINED);
 
     var widget = Image.asset(
       name,
@@ -69,7 +69,7 @@ class AssetImageWidgetParser extends WidgetParser {
     if (listener != null && clickEvent != null) {
       return GestureDetector(
         onTap: () {
-          listener.onClicked(clickEvent.eventType);
+          listener.onClicked(clickEvent);
         },
         child: widget,
       );
@@ -119,7 +119,7 @@ class NetworkImageWidgetParser extends WidgetParser {
 
     ClickEvent clickEvent = map.containsKey("clickEvent")
         ? ClickEvent.fromJson(map['clickEvent'])
-        : ClickEvent(EventType.NOT_DEFINED, null);
+        : ClickEvent(EventType.NOT_DEFINED);
 
     var widget = Image.network(
       src,
@@ -142,7 +142,7 @@ class NetworkImageWidgetParser extends WidgetParser {
     if (listener != null && clickEvent != null) {
       return GestureDetector(
         onTap: () {
-          listener.onClicked(clickEvent.eventType);
+          listener.onClicked(clickEvent);
         },
         child: widget,
       );

@@ -150,34 +150,14 @@ abstract class WidgetParser<T extends State<StatefulWidget>> {
 }
 
 abstract class ClickEventListener {
-  void onClicked(EventType event);
-}
-
-class WidgetClickEventListener extends ClickEventListener {
-  @override
-  void onClicked(EventType event) {
-    switch (event) {
-      case EventType.GET:
-        break;
-      case EventType.POST:
-        break;
-      case EventType.NAVIGATE:
-        break;
-      case EventType.VALIDATE:
-        break;
-      case EventType.VALIDATE_AND_SAVE:
-        break;
-      case EventType.NOT_DEFINED:
-        break;
-    }
-  }
+  void onClicked(ClickEvent event);
 }
 
 class NonResponseWidgetClickListener extends ClickEventListener {
   Logger _logger = Logger('dynamic_widget');
 
   @override
-  void onClicked(EventType event) {
+  void onClicked(ClickEvent event) {
     _logger.info('click event not defined');
   }
 }

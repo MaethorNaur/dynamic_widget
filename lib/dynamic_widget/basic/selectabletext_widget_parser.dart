@@ -49,13 +49,13 @@ class SelectableTextSpanParser {
   TextSpan parse(Map<String, dynamic> map, ClickEventListener listener) {
     ClickEvent clickEvent = map.containsKey("clickEvent")
         ? ClickEvent.fromJson(map['clickEvent'])
-        : ClickEvent(EventType.NOT_DEFINED, null);
+        : ClickEvent(EventType.NOT_DEFINED);
     var textSpan = TextSpan(
         text: map['text'],
         style: parseTextStyle(map['style']),
         recognizer: TapGestureRecognizer()
           ..onTap = () {
-            listener.onClicked(clickEvent.eventType);
+            listener.onClicked(clickEvent);
           },
         children: []);
 

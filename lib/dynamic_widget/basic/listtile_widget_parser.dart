@@ -43,7 +43,7 @@ class ListTileWidgetParser extends WidgetParser {
 
     ClickEvent clickEvent = map.containsKey("clickEvent")
         ? ClickEvent.fromJson(map['clickEvent'])
-        : ClickEvent(EventType.NOT_DEFINED, null);
+        : ClickEvent(EventType.NOT_DEFINED);
 
     return ListTile(
       isThreeLine: isThreeLine,
@@ -56,7 +56,7 @@ class ListTileWidgetParser extends WidgetParser {
       enabled: enabled,
       onTap: () {
         if (listener != null && clickEvent != null) {
-          listener.onClicked(clickEvent.eventType);
+          listener.onClicked(clickEvent);
         }
       },
       selected: selected,

@@ -425,8 +425,7 @@ class PreviewPage extends StatelessWidget {
 
 class DefaultClickListener implements ClickEventListener {
   @override
-  void onClicked(EventType event) {
+  void onClicked(ClickEvent event) {
     print(event.toString());
   }
- 
 }
