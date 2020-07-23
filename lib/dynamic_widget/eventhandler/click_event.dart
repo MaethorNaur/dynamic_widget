@@ -7,7 +7,7 @@ class ClickEvent {
 
   static ClickEvent fromJson(Map<String, dynamic> json) {
     var eventType = getEventTypeFromString(json['eventType']);
-    var uri = json['uri'];
+    var uri = json.containsKey('uri') ? json['uri'] : null;
     var onFinish = json.containsKey('onFinish')
         ? ClickEvent.fromJson(json['onFinish'])
         : null;
@@ -15,7 +15,7 @@ class ClickEvent {
   }
 }
 
-enum EventType { NAVIGATE, NOT_DEFINED }
+enum EventType { NAVIGATE, VALIDATE, NOT_DEFINED }
 
 EventType getEventTypeFromString(String eventType) {
   return EventType.values.firstWhere((e) => e.toString() == eventType);

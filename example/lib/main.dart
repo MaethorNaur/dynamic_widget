@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dynamic_widget/dynamic_widget.dart';
 import 'package:dynamic_widget/dynamic_widget/eventhandler/click_event.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import 'widget_json.dart';
 
@@ -70,6 +71,15 @@ class _MyHomePageState extends State<MyHomePage> {
           padding: EdgeInsets.all(20),
           crossAxisSpacing: 10,
           children: <Widget>[
+            RaisedButton(
+              child: Text("Custom"),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CodeEditorPage(textField)));
+              },
+            ),
             RaisedButton(
               child: Text("Container"),
               onPressed: () {
@@ -388,10 +398,20 @@ class _CodeEditorPageState extends State<CodeEditorPage> {
   }
 }
 
-class PreviewPage extends StatelessWidget {
+class PreviewPage extends StatefulWidget {
   final String jsonString;
 
   PreviewPage(this.jsonString);
+
+  @override
+  State<StatefulWidget> createState() => PreviewPageState(this.jsonString);
+}
+
+class PreviewPageState extends State<PreviewPage> {
+  final String jsonString;
+  final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
+
+  PreviewPageState(this.jsonString);
 
   @override
   Widget build(BuildContext context) {
@@ -418,14 +438,23 @@ class PreviewPage extends StatelessWidget {
   }
 
   Future<Widget> _buildWidget(BuildContext context) async {
-    return DynamicWidgetBuilder.build(
-        jsonString, context, new DefaultClickListener());
+    return DynamicWidgetBuilder.build<FormBuilderState>(
+        jsonString, context, new DefaultClickListener(_fbKey),
+        stateKey: _fbKey);
   }
 }
 
 class DefaultClickListener implements ClickEventListener {
+  GlobalKey<FormBuilderState> fbKey;
+
+  DefaultClickListener(this.fbKey);
+
   @override
   void onClicked(ClickEvent event) {
-    print(event.toString());
+    switch (event.eventType) {
+      case EventType.VALIDATE:
+        fbKey.currentState.saveAndValidate();
+        break;
+    }
   }
 }

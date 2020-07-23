@@ -9,9 +9,10 @@ class FormBuilderWidgetParser extends WidgetParser<FormBuilderState> {
       {GlobalKey<FormBuilderState> stateKey}) {
     bool autoValidate = map['autoValidate'];
     Map<String, dynamic> childMap = map['child'];
+    print("asdf" + childMap.toString());
     Widget child = childMap == null
         ? null
-        : DynamicWidgetBuilder.buildFromMap(childMap, buildContext, listener,
+        : DynamicWidgetBuilder.buildFromMap<FormBuilderState>(childMap, buildContext, listener,
             stateKey: stateKey);
 
     return FormBuilder(

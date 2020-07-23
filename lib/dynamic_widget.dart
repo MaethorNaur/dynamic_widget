@@ -11,6 +11,7 @@ import 'package:dynamic_widget/dynamic_widget/basic/container_widget_parser.dart
 import 'package:dynamic_widget/dynamic_widget/basic/dropcaptext_widget_parser.dart';
 import 'package:dynamic_widget/dynamic_widget/basic/expanded_widget_parser.dart';
 import 'package:dynamic_widget/dynamic_widget/basic/fittedbox_widget_parser.dart';
+import 'package:dynamic_widget/dynamic_widget/basic/formbuilder_widget_parser.dart';
 import 'package:dynamic_widget/dynamic_widget/basic/icon_widget_parser.dart';
 import 'package:dynamic_widget/dynamic_widget/basic/image_widget_parser.dart';
 import 'package:dynamic_widget/dynamic_widget/basic/indexedstack_widget_parser.dart';
@@ -42,6 +43,7 @@ class DynamicWidgetBuilder {
   static final _parsers = [
     ContainerWidgetParser(),
     TextWidgetParser(),
+    FormBuilderWidgetParser(),
     TextFieldWidgetParser(),
     SelectableTextWidgetParser(),
     RaisedButtonParser(),
@@ -103,7 +105,7 @@ class DynamicWidgetBuilder {
     var map = jsonDecode(json);
     ClickEventListener _listener =
         listener ?? new NonResponseWidgetClickListener();
-    var widget = buildFromMap(map, buildContext, _listener, stateKey: stateKey);
+    var widget = buildFromMap<T>(map, buildContext, _listener, stateKey: stateKey);
     return widget;
   }
 
@@ -115,7 +117,7 @@ class DynamicWidgetBuilder {
     String widgetName = map['type'];
     var parser = _widgetNameParserMap[widgetName];
     if (parser != null) {
-      return parser.parse(map, buildContext, listener);
+      return parser.parse(map, buildContext, listener, stateKey: stateKey);
     }
     log.warning("Not support type: $widgetName");
     return null;

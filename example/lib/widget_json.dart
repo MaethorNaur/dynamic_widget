@@ -1304,3 +1304,77 @@ var listTileJson = '''
 }
 
 ''';
+
+var textField = ''' 
+
+{
+  "type": "FormBuilder",
+  "autoValidate": true,
+  "child": {
+    "type": "Column",
+    "children": [
+      {
+        "type": "TextField",
+        "attribute": "name",
+        "initialValue": "Siddhartha",
+        "keyboardType": "text",
+        "obscureText": false,
+        "maxLines": 1,
+        "inputDecoration": {
+          "labelText": "Please enter your name"
+        },
+        "validators": {
+          "minLength": 4,
+          "maxLength": 15
+        },
+        "textInputAction": "next"
+      },
+      {
+        "type": "TextField",
+        "attribute": "name",
+        "initialValue": "Siddhartha",
+        "keyboardType": "text",
+        "obscureText": false,
+        "maxLines": 1,
+        "inputDecoration": {
+          "labelText": "Please enter your name"
+        },
+        "textInputAction": "next"
+      },
+      {
+        "type": "TextField",
+        "attribute": "name",
+        "initialValue": "Siddhartha",
+        "keyboardType": "text",
+        "obscureText": false,
+        "maxLines": 1,
+        "inputDecoration": {
+          "labelText": "Please enter your name"
+        },
+        "textInputAction": "next"
+      },
+      {
+        "type": "Container",
+        "alignment": "center",
+        "child": {
+          "type": "RaisedButton",
+          "color": "##FF00FF",
+          "padding": "8,8,8,8",
+          "textColor": "#00FF00",
+          "elevation" : 8.0,
+          "splashColor" : "#00FF00",
+          "clickEvent" : {
+                "eventType": "EventType.VALIDATE",
+                "uri": "route://productDetail?goods_id=123"
+          },
+          "child" : {
+            "type": "Text",
+            "data": "I am a button"
+          }  
+        }
+      }
+    ]
+  }
+}
+
+''';

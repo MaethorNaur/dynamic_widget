@@ -18,8 +18,8 @@ class TextFieldWidgetParser extends WidgetParser {
     return null;
   }
 
-  getValidators(Map<String, dynamic> validatorMap) {
-    var validators = List();
+  List<ValidatorType> getValidators(Map<String, dynamic> validatorMap) {
+    var validators = List<ValidatorType>();
     if (validatorMap.containsKey('minLength')) {
       int minLength = validatorMap['minLength'];
       String errorText = validatorMap['minLengthErrorText'];
@@ -86,7 +86,6 @@ class TextFieldWidgetParser extends WidgetParser {
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
       ClickEventListener listener,
       {GlobalKey<State<StatefulWidget>> stateKey}) {
-    print('from library ${map.toString()}');
     String attribute = map['attribute'];
     String initialValue = map['initialValue'];
     TextInputType keyboardType = map.containsKey('keyboardType')
@@ -134,3 +133,5 @@ class TextFieldWidgetParser extends WidgetParser {
     );
   }
 }
+
+typedef String ValidatorType(dynamic);
