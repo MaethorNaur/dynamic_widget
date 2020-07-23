@@ -451,10 +451,20 @@ class DefaultClickListener implements ClickEventListener {
 
   @override
   void onClicked(ClickEvent event) {
-    switch (event.eventType) {
+    _handleClickEvent(event);
+  }
+
+  _handleClickEvent(ClickEvent clickEvent) async {
+    switch (clickEvent.eventType) {
       case EventType.VALIDATE:
-        fbKey.currentState.saveAndValidate();
+        if (fbKey.currentState.saveAndValidate()) {
+          print(fbKey.currentState.value['name']);
+        }
         break;
+    }
+
+    if (clickEvent.onFinish != null) {
+      _handleClickEvent(clickEvent.onFinish);
     }
   }
 }
