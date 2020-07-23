@@ -8,7 +8,7 @@ class ClipRRectWidgetParser extends WidgetParser {
 
   @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener listener,
+      ClickEventListener listener,
       {GlobalKey<State<StatefulWidget>> stateKey}) {
     var radius = map['borderRadius'].toString().split(",");
     double topLeft = double.parse(radius[0]);

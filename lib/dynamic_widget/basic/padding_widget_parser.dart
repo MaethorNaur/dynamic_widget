@@ -8,7 +8,7 @@ class PaddingWidgetParser extends WidgetParser {
 
   @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener listener,
+      ClickEventListener listener,
       {GlobalKey<State<StatefulWidget>> stateKey}) {
     return Padding(
       padding: map.containsKey("padding")

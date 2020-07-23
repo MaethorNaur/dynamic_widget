@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:dynamic_widget/dynamic_widget.dart';
+import 'package:dynamic_widget/dynamic_widget/eventhandler/click_event.dart';
 import 'package:dynamic_widget/dynamic_widget/utils.dart';
 import 'package:flutter/widgets.dart';
 
@@ -10,7 +11,7 @@ class AssetImageWidgetParser extends WidgetParser {
 
   @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener listener,
+      ClickEventListener listener,
       {GlobalKey<State<StatefulWidget>> stateKey}) {
     String name = map['name'];
     String semanticLabel =
@@ -43,8 +44,9 @@ class AssetImageWidgetParser extends WidgetParser {
         ? parseFilterQuality(map['filterQuality'])
         : FilterQuality.low;
 
-    String clickEvent =
-        map.containsKey("click_event") ? map['click_event'] : "";
+    ClickEvent clickEvent = map.containsKey("clickEvent")
+        ? ClickEvent.fromJson(map['clickEvent'])
+        : ClickEvent(EventType.NOT_DEFINED, null);
 
     var widget = Image.asset(
       name,
@@ -64,10 +66,10 @@ class AssetImageWidgetParser extends WidgetParser {
       filterQuality: filterQuality,
     );
 
-    if (listener != null && (clickEvent != null && clickEvent.isNotEmpty)) {
+    if (listener != null && clickEvent != null) {
       return GestureDetector(
         onTap: () {
-          listener.onClicked(clickEvent);
+          listener.onClicked(clickEvent.eventType);
         },
         child: widget,
       );
@@ -82,7 +84,7 @@ class NetworkImageWidgetParser extends WidgetParser {
 
   @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener listener,
+      ClickEventListener listener,
       {GlobalKey<State<StatefulWidget>> stateKey}) {
     String src = map['src'];
     String semanticLabel =
@@ -115,8 +117,9 @@ class NetworkImageWidgetParser extends WidgetParser {
         ? parseFilterQuality(map['filterQuality'])
         : FilterQuality.low;
 
-    String clickEvent =
-        map.containsKey("click_event") ? map['click_event'] : "";
+    ClickEvent clickEvent = map.containsKey("clickEvent")
+        ? ClickEvent.fromJson(map['clickEvent'])
+        : ClickEvent(EventType.NOT_DEFINED, null);
 
     var widget = Image.network(
       src,
@@ -136,10 +139,10 @@ class NetworkImageWidgetParser extends WidgetParser {
       filterQuality: filterQuality,
     );
 
-    if (listener != null && (clickEvent != null && clickEvent.isNotEmpty)) {
+    if (listener != null && clickEvent != null) {
       return GestureDetector(
         onTap: () {
-          listener.onClicked(clickEvent);
+          listener.onClicked(clickEvent.eventType);
         },
         child: widget,
       );

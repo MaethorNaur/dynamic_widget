@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dynamic_widget/dynamic_widget.dart';
+import 'package:dynamic_widget/dynamic_widget/eventhandler/click_event.dart';
 import 'package:flutter/material.dart';
 
 import 'widget_json.dart';
@@ -422,9 +423,10 @@ class PreviewPage extends StatelessWidget {
   }
 }
 
-class DefaultClickListener implements ClickListener {
+class DefaultClickListener implements ClickEventListener {
   @override
-  void onClicked(String event) {
-    print("Receive click event: " + event);
+  void onClicked(EventType event) {
+    print(event.toString());
   }
+ 
 }

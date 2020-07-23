@@ -84,7 +84,7 @@ class TextFieldWidgetParser extends WidgetParser {
 
   @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener listener,
+      ClickEventListener listener,
       {GlobalKey<State<StatefulWidget>> stateKey}) {
     print('from library ${map.toString()}');
     String attribute = map['attribute'];

@@ -8,7 +8,7 @@ class AspectRatioWidgetParser extends WidgetParser {
   String get widgetName => "AspectRatio";
 
   @override
-  Widget parse(Map<String, dynamic> map, BuildContext buildContext, ClickListener listener, {GlobalKey<State<StatefulWidget>> stateKey}) {
+  Widget parse(Map<String, dynamic> map, BuildContext buildContext, ClickEventListener listener, {GlobalKey<State<StatefulWidget>> stateKey}) {
     return AspectRatio(
       aspectRatio: map["aspectRatio"],
       child: DynamicWidgetBuilder.buildFromMap(

@@ -8,7 +8,7 @@ class SafeAreaWidgetParser extends WidgetParser {
 
   @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener listener,
+      ClickEventListener listener,
       {GlobalKey<State<StatefulWidget>> stateKey}) {
     var left = map.containsKey("left") ? map["left"] : true;
     var right = map.containsKey("right") ? map["right"] : true;

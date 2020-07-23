@@ -26,6 +26,7 @@ import 'package:dynamic_widget/dynamic_widget/basic/stack_positioned_widgets_par
 import 'package:dynamic_widget/dynamic_widget/basic/text_widget_parser.dart';
 import 'package:dynamic_widget/dynamic_widget/basic/textfield_widget_parser.dart';
 import 'package:dynamic_widget/dynamic_widget/basic/wrap_widget_parser.dart';
+import 'package:dynamic_widget/dynamic_widget/eventhandler/click_event.dart';
 import 'package:dynamic_widget/dynamic_widget/scrolling/gridview_widget_parser.dart';
 import 'package:dynamic_widget/dynamic_widget/scrolling/listview_widget_parser.dart';
 import 'package:dynamic_widget/dynamic_widget/scrolling/pageview_widget_parser.dart';
@@ -96,11 +97,12 @@ class DynamicWidgetBuilder {
 
   //This method is the entry point for the parser.
   static Widget build<T extends State<StatefulWidget>>(
-      String json, BuildContext buildContext, ClickListener listener,
+      String json, BuildContext buildContext, ClickEventListener listener,
       {GlobalKey<T> stateKey}) {
     initDefaultParsersIfNess();
     var map = jsonDecode(json);
-    ClickListener _listener = listener ?? new NonResponseWidgetClickListener();
+    ClickEventListener _listener =
+        listener ?? new NonResponseWidgetClickListener();
     var widget = buildFromMap(map, buildContext, _listener, stateKey: stateKey);
     return widget;
   }
@@ -108,7 +110,7 @@ class DynamicWidgetBuilder {
   static Widget buildFromMap<T extends State<StatefulWidget>>(
       Map<String, dynamic> map,
       BuildContext buildContext,
-      ClickListener listener,
+      ClickEventListener listener,
       {GlobalKey<T> stateKey}) {
     String widgetName = map['type'];
     var parser = _widgetNameParserMap[widgetName];
@@ -120,7 +122,9 @@ class DynamicWidgetBuilder {
   }
 
   static List<Widget> buildWidgets<T extends State<StatefulWidget>>(
-      List<dynamic> values, BuildContext buildContext, ClickListener listener,
+      List<dynamic> values,
+      BuildContext buildContext,
+      ClickEventListener listener,
       {GlobalKey<T> stateKey}) {
     List<Widget> rt = [];
     for (var value in values) {
@@ -134,7 +138,7 @@ class DynamicWidgetBuilder {
 abstract class WidgetParser<T extends State<StatefulWidget>> {
   /// parse the json map into a flutter widget.
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener listener,
+      ClickEventListener listener,
       {GlobalKey<T> stateKey});
 
   /// the widget type name for example:
@@ -145,16 +149,35 @@ abstract class WidgetParser<T extends State<StatefulWidget>> {
   String get widgetName;
 }
 
-abstract class ClickListener {
-  void onClicked(String event);
+abstract class ClickEventListener {
+  void onClicked(EventType event);
 }
 
-class NonResponseWidgetClickListener implements ClickListener {
-  static final Logger log = Logger('NonResponseWidgetClickListener');
+class WidgetClickEventListener extends ClickEventListener {
+  @override
+  void onClicked(EventType event) {
+    switch (event) {
+      case EventType.GET:
+        break;
+      case EventType.POST:
+        break;
+      case EventType.NAVIGATE:
+        break;
+      case EventType.VALIDATE:
+        break;
+      case EventType.VALIDATE_AND_SAVE:
+        break;
+      case EventType.NOT_DEFINED:
+        break;
+    }
+  }
+}
+
+class NonResponseWidgetClickListener extends ClickEventListener {
+  Logger _logger = Logger('dynamic_widget');
 
   @override
-  void onClicked(String event) {
-    log.info("receiver click event: " + event);
-    print("receiver click event: " + event);
+  void onClicked(EventType event) {
+    _logger.info('click event not defined');
   }
 }

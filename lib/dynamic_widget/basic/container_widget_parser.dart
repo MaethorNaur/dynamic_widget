@@ -1,4 +1,5 @@
 import 'package:dynamic_widget/dynamic_widget.dart';
+import 'package:dynamic_widget/dynamic_widget/eventhandler/click_event.dart';
 import 'package:dynamic_widget/dynamic_widget/utils.dart';
 import 'package:flutter/widgets.dart';
 
@@ -8,7 +9,7 @@ class ContainerWidgetParser extends WidgetParser {
 
   @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener listener,
+      ClickEventListener listener,
       {GlobalKey<State<StatefulWidget>> stateKey}) {
     Alignment alignment = parseAlignment(map['alignment']);
     Color color = parseHexColor(map['color']);
@@ -22,8 +23,9 @@ class ContainerWidgetParser extends WidgetParser {
         : DynamicWidgetBuilder.buildFromMap(childMap, buildContext, listener,
             stateKey: stateKey);
 
-    String clickEvent =
-        map.containsKey("click_event") ? map['click_event'] : "";
+    ClickEvent clickEvent = map.containsKey("clickEvent")
+        ? ClickEvent.fromJson(map['clickEvent'])
+        : ClickEvent(EventType.NOT_DEFINED, null);
 
     var containerWidget = Container(
       alignment: alignment,
@@ -39,7 +41,7 @@ class ContainerWidgetParser extends WidgetParser {
     if (listener != null && clickEvent != null) {
       return GestureDetector(
         onTap: () {
-          listener.onClicked(clickEvent);
+          listener.onClicked(clickEvent.eventType);
         },
         child: containerWidget,
       );

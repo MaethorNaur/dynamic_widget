@@ -174,7 +174,10 @@ var dropCapTextImageJson = '''
                 "child":{
                    "type":"NetworkImage",
                    "src":"https://b.appsimg.com/upload/momin/2019/01/23/101/1548249269085.png",
-                   "click_event" : "route://productDetail?goods_id=123"
+                   "clickEvent" : {
+                        "eventType": "EventType.VALIDATE",
+                        "uri": "route://productDetail?goods_id=123"
+                   }
                 }
              }
           }
@@ -195,7 +198,10 @@ var raisedButtonJson = '''
     "textColor": "#00FF00",
     "elevation" : 8.0,
     "splashColor" : "#00FF00",
-    "click_event" : "route://productDetail?goods_id=123",
+    "clickEvent" : {
+          "eventType": "EventType.VALIDATE",
+          "uri": "route://productDetail?goods_id=123"
+    },
     "child" : {
       "type": "Text",
       "data": "I am a button"

@@ -5,7 +5,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 class FormBuilderWidgetParser extends WidgetParser<FormBuilderState> {
   @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener listener,
+      ClickEventListener listener,
       {GlobalKey<FormBuilderState> stateKey}) {
     bool autoValidate = map['autoValidate'];
     Map<String, dynamic> childMap = map['child'];
