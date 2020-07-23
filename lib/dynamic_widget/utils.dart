@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:dynamic_widget/dynamic_widget.dart';
 import 'package:dynamic_widget/dynamic_widget/drop_cap_text.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 TextAlign parseTextAlign(String textAlignString) {
@@ -254,6 +255,111 @@ BoxConstraints parseBoxConstraints(Map<String, dynamic> map) {
     minHeight: minHeight,
     maxHeight: maxHeight,
   );
+}
+
+BoxDecoration parseBoxDecoration(
+    Map<String, dynamic> map, BuildContext buildContext) {
+  if (map == null) return null;
+
+  Color color = parseHexColor(map['color']);
+
+  Map<String, dynamic> mapOfImage =
+      map.containsKey('image') ? map['image'] : null;
+  DecorationImage image = parseDecorationImage(mapOfImage);
+
+  Map<String, dynamic> mapOfBorder =
+      map.containsKey('border') ? map['border'] : null;
+
+  Border border = parseBoxBorder(mapOfBorder);
+  BorderRadius borderRadius = parseBorderRadius(map['borderRadius']);
+  BoxShape shape = parseBoxShape(map['shape']);
+
+  Map<String, dynamic> mapOfBoxShadow =
+      map.containsKey('boxShadow') ? map['boxShadow'] : null;
+  BoxShadow boxShadow = parseBoxShadow(mapOfBoxShadow);
+
+  return BoxDecoration(
+    color: color,
+    image: image,
+    border: border,
+    borderRadius: borderRadius,
+    boxShadow: boxShadow != null ? [boxShadow] : [],
+    shape: shape ?? BoxShape.rectangle,
+  );
+}
+
+BoxShadow parseBoxShadow(Map<String, dynamic> mapOfBoxShadow) {
+  if (mapOfBoxShadow == null) {
+    return null;
+  }
+
+  Color color = parseHexColor(mapOfBoxShadow['color']);
+  double spreadRadius = mapOfBoxShadow['spreadRadius'];
+  double blurRadius = mapOfBoxShadow['blurRadius'];
+  Offset offset = parseOffset(mapOfBoxShadow['offset']);
+
+  return BoxShadow(
+    color: color,
+    spreadRadius: spreadRadius,
+    blurRadius: blurRadius ?? 0.0,
+    offset: offset ?? Offset(0, 0),
+  );
+}
+
+Offset parseOffset(String offsetString) {
+  if (offsetString == null || offsetString == '') {
+    return null;
+  }
+
+  var values = offsetString.split(',');
+  return Offset(double.parse(values[0]), double.parse(values[1]));
+}
+
+BoxShape parseBoxShape(String boxShapeString) {
+  if (boxShapeString == null) {
+    return null;
+  }
+
+  switch (boxShapeString) {
+    case 'circle':
+      return BoxShape.circle;
+    case 'rectangle':
+      return BoxShape.rectangle;
+  }
+
+  return null;
+}
+
+BorderRadius parseBorderRadius(String borderRadiusString) {
+  if (borderRadiusString == null || borderRadiusString == '') {
+    return null;
+  }
+
+  var values = borderRadiusString.split(",");
+  return BorderRadius.only(
+      topLeft: Radius.circular(double.parse(values[0])),
+      topRight: Radius.circular(double.parse(values[1])),
+      bottomLeft: Radius.circular(double.parse(values[2])),
+      bottomRight: Radius.circular(double.parse(values[3])));
+}
+
+BoxBorder parseBoxBorder(Map<String, dynamic> mapOfBorder) {
+  if (mapOfBorder != null) {
+    Color color = parseHexColor(mapOfBorder['color']);
+    double width = mapOfBorder['width'];
+    return Border.all(color: color, width: width);
+  }
+  return null;
+}
+
+DecorationImage parseDecorationImage(Map<String, dynamic> mapOfImage) {
+  if (mapOfImage != null) {
+    return DecorationImage(
+      image: NetworkImage(mapOfImage['url']),
+      fit: parseBoxFit(mapOfImage['fit']),
+    );
+  }
+  return null;
 }
 
 EdgeInsetsGeometry parseEdgeInsetsGeometry(String edgeInsetsGeometryString) {
