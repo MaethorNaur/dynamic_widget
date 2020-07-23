@@ -9,8 +9,12 @@ import 'package:http/http.dart' as http;
 
 class ListViewWidgetParser extends WidgetParser {
   @override
+  String get widgetName => "ListView";
+
+  @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener listener) {
+      ClickListener listener,
+      {GlobalKey<State<StatefulWidget>> stateKey}) {
     var scrollDirection = Axis.vertical;
     if (map.containsKey("scrollDirection") &&
         "horizontal" == map["scrollDirection"]) {
@@ -25,7 +29,8 @@ class ListViewWidgetParser extends WidgetParser {
         : null;
     var itemExtent = map.containsKey("itemExtent") ? map["itemExtent"] : null;
     var children = DynamicWidgetBuilder.buildWidgets(
-        map['children'], buildContext, listener);
+        map['children'], buildContext, listener,
+        stateKey: stateKey);
     var pageSize = map.containsKey("pageSize") ? map["pageSize"] : 10;
     var loadMoreUrl =
         map.containsKey("loadMoreUrl") ? map["loadMoreUrl"] : null;
@@ -45,9 +50,6 @@ class ListViewWidgetParser extends WidgetParser {
 
     return new ListViewWidget(params, buildContext);
   }
-
-  @override
-  String get widgetName => "ListView";
 }
 
 class ListViewWidget extends StatefulWidget {

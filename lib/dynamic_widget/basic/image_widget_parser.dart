@@ -6,8 +6,12 @@ import 'package:flutter/widgets.dart';
 
 class AssetImageWidgetParser extends WidgetParser {
   @override
+  String get widgetName => "AssetImage";
+
+  @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener listener) {
+      ClickListener listener,
+      {GlobalKey<State<StatefulWidget>> stateKey}) {
     String name = map['name'];
     String semanticLabel =
         map.containsKey('semanticLabel') ? map['semanticLabel'] : null;
@@ -70,15 +74,16 @@ class AssetImageWidgetParser extends WidgetParser {
     }
     return widget;
   }
-
-  @override
-  String get widgetName => "AssetImage";
 }
 
 class NetworkImageWidgetParser extends WidgetParser {
   @override
+  String get widgetName => "NetworkImage";
+
+  @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener listener) {
+      ClickListener listener,
+      {GlobalKey<State<StatefulWidget>> stateKey}) {
     String src = map['src'];
     String semanticLabel =
         map.containsKey('semanticLabel') ? map['semanticLabel'] : null;
@@ -141,7 +146,4 @@ class NetworkImageWidgetParser extends WidgetParser {
     }
     return widget;
   }
-
-  @override
-  String get widgetName => "NetworkImage";
 }

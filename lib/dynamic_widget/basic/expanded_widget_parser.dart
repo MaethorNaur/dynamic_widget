@@ -3,15 +3,17 @@ import 'package:flutter/widgets.dart';
 
 class ExpandedWidgetParser extends WidgetParser {
   @override
+  String get widgetName => "Expanded";
+
+  @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener listener) {
+      ClickListener listener,
+      {GlobalKey<State<StatefulWidget>> stateKey}) {
     return Expanded(
       child: DynamicWidgetBuilder.buildFromMap(
-          map["child"], buildContext, listener),
+          map["child"], buildContext, listener,
+          stateKey: stateKey),
       flex: map.containsKey("flex") ? map["flex"] : 1,
     );
   }
-
-  @override
-  String get widgetName => "Expanded";
 }

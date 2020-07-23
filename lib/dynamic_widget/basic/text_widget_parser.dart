@@ -5,8 +5,12 @@ import 'package:flutter/widgets.dart';
 
 class TextWidgetParser implements WidgetParser {
   @override
+  String get widgetName => "Text";
+
+  @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener listener) {
+      ClickListener listener,
+      {GlobalKey<State<StatefulWidget>> stateKey}) {
     String data = map['data'];
     String textAlignString = map['textAlign'];
     String overflow = map['overflow'];
@@ -47,9 +51,6 @@ class TextWidgetParser implements WidgetParser {
       );
     }
   }
-
-  @override
-  String get widgetName => "Text";
 }
 
 class TextSpanParser {

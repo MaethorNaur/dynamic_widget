@@ -4,17 +4,19 @@ import 'package:flutter/widgets.dart';
 
 class PaddingWidgetParser extends WidgetParser {
   @override
+  String get widgetName => "Padding";
+
+  @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener listener) {
+      ClickListener listener,
+      {GlobalKey<State<StatefulWidget>> stateKey}) {
     return Padding(
       padding: map.containsKey("padding")
           ? parseEdgeInsetsGeometry(map["padding"])
           : null,
       child: DynamicWidgetBuilder.buildFromMap(
-          map["child"], buildContext, listener),
+          map["child"], buildContext, listener,
+          stateKey: stateKey),
     );
   }
-
-  @override
-  String get widgetName => "Padding";
 }

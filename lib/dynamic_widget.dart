@@ -95,17 +95,21 @@ class DynamicWidgetBuilder {
   }
 
   //This method is the entry point for the parser.
-  static Widget build(
-      String json, BuildContext buildContext, ClickListener listener) {
+  static Widget build<T extends State<StatefulWidget>>(
+      String json, BuildContext buildContext, ClickListener listener,
+      {GlobalKey<T> stateKey}) {
     initDefaultParsersIfNess();
     var map = jsonDecode(json);
     ClickListener _listener = listener ?? new NonResponseWidgetClickListener();
-    var widget = buildFromMap(map, buildContext, _listener);
+    var widget = buildFromMap(map, buildContext, _listener, stateKey: stateKey);
     return widget;
   }
 
-  static Widget buildFromMap(Map<String, dynamic> map,
-      BuildContext buildContext, ClickListener listener) {
+  static Widget buildFromMap<T extends State<StatefulWidget>>(
+      Map<String, dynamic> map,
+      BuildContext buildContext,
+      ClickListener listener,
+      {GlobalKey<T> stateKey}) {
     String widgetName = map['type'];
     var parser = _widgetNameParserMap[widgetName];
     if (parser != null) {
@@ -115,21 +119,23 @@ class DynamicWidgetBuilder {
     return null;
   }
 
-  static List<Widget> buildWidgets(
-      List<dynamic> values, BuildContext buildContext, ClickListener listener) {
+  static List<Widget> buildWidgets<T extends State<StatefulWidget>>(
+      List<dynamic> values, BuildContext buildContext, ClickListener listener,
+      {GlobalKey<T> stateKey}) {
     List<Widget> rt = [];
     for (var value in values) {
-      rt.add(buildFromMap(value, buildContext, listener));
+      rt.add(buildFromMap(value, buildContext, listener, stateKey: stateKey));
     }
     return rt;
   }
 }
 
 /// extends this class to make a Flutter widget parser.
-abstract class WidgetParser {
+abstract class WidgetParser<T extends State<StatefulWidget>> {
   /// parse the json map into a flutter widget.
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener listener);
+      ClickListener listener,
+      {GlobalKey<T> stateKey});
 
   /// the widget type name for example:
   /// {"type" : "Text", "data" : "Denny"}

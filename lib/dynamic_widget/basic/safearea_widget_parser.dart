@@ -4,8 +4,12 @@ import 'package:flutter/widgets.dart';
 
 class SafeAreaWidgetParser extends WidgetParser {
   @override
+  String get widgetName => "SafeArea";
+
+  @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener listener) {
+      ClickListener listener,
+      {GlobalKey<State<StatefulWidget>> stateKey}) {
     var left = map.containsKey("left") ? map["left"] : true;
     var right = map.containsKey("right") ? map["right"] : true;
     var top = map.containsKey("top") ? map["top"] : true;
@@ -24,10 +28,8 @@ class SafeAreaWidgetParser extends WidgetParser {
       minimum: edgeInsets,
       maintainBottomViewPadding: maintainBottomViewPadding,
       child: DynamicWidgetBuilder.buildFromMap(
-          map["child"], buildContext, listener),
+          map["child"], buildContext, listener,
+          stateKey: stateKey),
     );
   }
-
-  @override
-  String get widgetName => "SafeArea";
 }

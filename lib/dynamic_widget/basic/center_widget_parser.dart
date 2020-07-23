@@ -3,17 +3,19 @@ import 'package:flutter/widgets.dart';
 
 class CenterWidgetParser extends WidgetParser {
   @override
+  String get widgetName => "Center";
+
+  @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener listener) {
+      ClickListener listener,
+      {GlobalKey<State<StatefulWidget>> stateKey}) {
     return Center(
       widthFactor: map.containsKey("widthFactor") ? map["widthFactor"] : null,
       heightFactor:
           map.containsKey("heightFactor") ? map["heightFactor"] : null,
       child: DynamicWidgetBuilder.buildFromMap(
-          map["child"], buildContext, listener),
+          map["child"], buildContext, listener,
+          stateKey: stateKey),
     );
   }
-
-  @override
-  String get widgetName => "Center";
 }

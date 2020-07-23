@@ -9,8 +9,12 @@ import 'package:http/http.dart' as http;
 
 class GridViewWidgetParser extends WidgetParser {
   @override
+  String get widgetName => "GridView";
+
+  @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener listener) {
+      ClickListener listener,
+      {GlobalKey<State<StatefulWidget>> stateKey}) {
     var scrollDirection = Axis.vertical;
     if (map.containsKey("scrollDirection") &&
         "horizontal" == map["scrollDirection"]) {
@@ -31,7 +35,8 @@ class GridViewWidgetParser extends WidgetParser {
     double childAspectRatio =
         map.containsKey('childAspectRatio') ? map['childAspectRatio'] : 1.0;
     var children = DynamicWidgetBuilder.buildWidgets(
-        map['children'], buildContext, listener);
+        map['children'], buildContext, listener,
+        stateKey: stateKey);
 
     var pageSize = map.containsKey("pageSize") ? map["pageSize"] : 10;
     var loadMoreUrl =
@@ -54,9 +59,6 @@ class GridViewWidgetParser extends WidgetParser {
         isDemo);
     return GridViewWidget(params, buildContext);
   }
-
-  @override
-  String get widgetName => "GridView";
 }
 
 class GridViewWidget extends StatefulWidget {

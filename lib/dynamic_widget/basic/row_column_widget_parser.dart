@@ -4,8 +4,12 @@ import 'package:flutter/widgets.dart';
 
 class RowWidgetParser extends WidgetParser {
   @override
+  String get widgetName => "Row";
+
+  @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener listener) {
+      ClickListener listener,
+      {GlobalKey<State<StatefulWidget>> stateKey}) {
     return Row(
       crossAxisAlignment: map.containsKey('crossAxisAlignment')
           ? parseCrossAxisAlignment(map['crossAxisAlignment'])
@@ -26,18 +30,20 @@ class RowWidgetParser extends WidgetParser {
           ? parseVerticalDirection(map['verticalDirection'])
           : VerticalDirection.down,
       children: DynamicWidgetBuilder.buildWidgets(
-          map['children'], buildContext, listener),
+          map['children'], buildContext, listener,
+          stateKey: stateKey),
     );
   }
-
-  @override
-  String get widgetName => "Row";
 }
 
 class ColumnWidgetParser extends WidgetParser {
   @override
+  String get widgetName => "Column";
+
+  @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener listener) {
+      ClickListener listener,
+      {GlobalKey<State<StatefulWidget>> stateKey}) {
     return Column(
       crossAxisAlignment: map.containsKey('crossAxisAlignment')
           ? parseCrossAxisAlignment(map['crossAxisAlignment'])
@@ -58,10 +64,8 @@ class ColumnWidgetParser extends WidgetParser {
           ? parseVerticalDirection(map['verticalDirection'])
           : VerticalDirection.down,
       children: DynamicWidgetBuilder.buildWidgets(
-          map['children'], buildContext, listener),
+          map['children'], buildContext, listener,
+          stateKey: stateKey),
     );
   }
-
-  @override
-  String get widgetName => "Column";
 }

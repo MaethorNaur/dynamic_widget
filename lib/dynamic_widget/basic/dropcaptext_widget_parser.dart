@@ -5,8 +5,12 @@ import 'package:flutter/material.dart';
 
 class DropCapTextParser extends WidgetParser {
   @override
+  String get widgetName => "DropCapText";
+
+  @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener listener) {
+      ClickListener listener,
+      {GlobalKey<State<StatefulWidget>> stateKey}) {
     return DropCapText(
       data: map.containsKey('data') ? map['data'] : null,
       selectable: map.containsKey('selectable') ? map['selectable'] : false,
@@ -46,7 +50,4 @@ class DropCapTextParser extends WidgetParser {
           : null,
     );
   }
-
-  @override
-  String get widgetName => "DropCapText";
 }

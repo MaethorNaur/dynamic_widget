@@ -5,8 +5,12 @@ import 'package:flutter/material.dart';
 
 class SelectableTextWidgetParser implements WidgetParser {
   @override
+  String get widgetName => "SelectableText";
+
+  @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener listener) {
+      ClickListener listener,
+      {GlobalKey<State<StatefulWidget>> stateKey}) {
     String data = map['data'];
     String textAlignString = map['textAlign'];
     int maxLines = map['maxLines'];
@@ -38,9 +42,6 @@ class SelectableTextWidgetParser implements WidgetParser {
       );
     }
   }
-
-  @override
-  String get widgetName => "SelectableText";
 }
 
 class SelectableTextSpanParser {

@@ -4,11 +4,16 @@ import 'package:flutter/widgets.dart';
 
 class PositionedWidgetParser extends WidgetParser {
   @override
+  String get widgetName => "Positioned";
+
+  @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener listener) {
+      ClickListener listener,
+      {GlobalKey<State<StatefulWidget>> stateKey}) {
     return Positioned(
       child: DynamicWidgetBuilder.buildFromMap(
-          map["child"], buildContext, listener),
+          map["child"], buildContext, listener,
+          stateKey: stateKey),
       top: map.containsKey("top") ? map["top"] : null,
       right: map.containsKey("right") ? map["right"] : null,
       bottom: map.containsKey("bottom") ? map["bottom"] : null,
@@ -17,15 +22,16 @@ class PositionedWidgetParser extends WidgetParser {
       height: map.containsKey("height") ? map["height"] : null,
     );
   }
-
-  @override
-  String get widgetName => "Positioned";
 }
 
 class StackWidgetParser extends WidgetParser {
   @override
+  String get widgetName => "Stack";
+
+  @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener listener) {
+      ClickListener listener,
+      {GlobalKey<State<StatefulWidget>> stateKey}) {
     return Stack(
       alignment: map.containsKey("alignment")
           ? parseAlignment(map["alignment"])
@@ -38,10 +44,8 @@ class StackWidgetParser extends WidgetParser {
           ? parseOverflow(map["overflow"])
           : Overflow.clip,
       children: DynamicWidgetBuilder.buildWidgets(
-          map['children'], buildContext, listener),
+          map['children'], buildContext, listener,
+          stateKey: stateKey),
     );
   }
-
-  @override
-  String get widgetName => "Stack";
 }

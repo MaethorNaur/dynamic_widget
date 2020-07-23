@@ -4,9 +4,13 @@ import 'package:dynamic_widget/dynamic_widget/utils.dart';
 import 'package:flutter/material.dart';
 
 class IconWidgetParser extends WidgetParser {
+ 
+
   @override
-  Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener listener) {
+  String get widgetName => "Icon";
+
+  @override
+  Widget parse(Map<String, dynamic> map, BuildContext buildContext, ClickListener listener, {GlobalKey<State<StatefulWidget>> stateKey}) {
     return Icon(
       map.containsKey('data')
           ? getIconUsingPrefix(name: map['data'])
@@ -14,13 +18,10 @@ class IconWidgetParser extends WidgetParser {
       size: map.containsKey("size") ? map['size'] : null,
       color: map.containsKey('color') ? parseHexColor(map['color']) : null,
       semanticLabel:
-          map.containsKey('semanticLabel') ? map['semanticLabel'] : null,
+      map.containsKey('semanticLabel') ? map['semanticLabel'] : null,
       textDirection: map.containsKey('textDirection')
           ? parseTextDirection(map['textDirection'])
           : null,
     );
   }
-
-  @override
-  String get widgetName => "Icon";
 }

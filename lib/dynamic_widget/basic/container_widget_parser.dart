@@ -4,8 +4,12 @@ import 'package:flutter/widgets.dart';
 
 class ContainerWidgetParser extends WidgetParser {
   @override
+  String get widgetName => "Container";
+
+  @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener listener) {
+      ClickListener listener,
+      {GlobalKey<State<StatefulWidget>> stateKey}) {
     Alignment alignment = parseAlignment(map['alignment']);
     Color color = parseHexColor(map['color']);
     BoxConstraints constraints = parseBoxConstraints(map['constraints']);
@@ -15,7 +19,8 @@ class ContainerWidgetParser extends WidgetParser {
     Map<String, dynamic> childMap = map['child'];
     Widget child = childMap == null
         ? null
-        : DynamicWidgetBuilder.buildFromMap(childMap, buildContext, listener);
+        : DynamicWidgetBuilder.buildFromMap(childMap, buildContext, listener,
+            stateKey: stateKey);
 
     String clickEvent =
         map.containsKey("click_event") ? map['click_event'] : "";
@@ -42,7 +47,4 @@ class ContainerWidgetParser extends WidgetParser {
       return containerWidget;
     }
   }
-
-  @override
-  String get widgetName => "Container";
 }

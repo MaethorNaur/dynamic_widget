@@ -4,8 +4,12 @@ import 'package:flutter/material.dart';
 
 class RaisedButtonParser extends WidgetParser {
   @override
+  String get widgetName => "RaisedButton";
+
+  @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener listener) {
+      ClickListener listener,
+      {GlobalKey<State<StatefulWidget>> stateKey}) {
     String clickEvent =
         map.containsKey("click_event") ? map['click_event'] : "";
 
@@ -29,7 +33,8 @@ class RaisedButtonParser extends WidgetParser {
       textColor:
           map.containsKey('textColor') ? parseHexColor(map['textColor']) : null,
       child: DynamicWidgetBuilder.buildFromMap(
-          map['child'], buildContext, listener),
+          map['child'], buildContext, listener,
+          stateKey: stateKey),
       onPressed: () {
         listener.onClicked(clickEvent);
       },
@@ -37,7 +42,4 @@ class RaisedButtonParser extends WidgetParser {
 
     return raisedButton;
   }
-
-  @override
-  String get widgetName => "RaisedButton";
 }

@@ -4,8 +4,12 @@ import 'package:flutter/widgets.dart';
 
 class PlaceholderWidgetParser extends WidgetParser {
   @override
+  String get widgetName => "Placeholder";
+
+  @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickListener listener) {
+      ClickListener listener,
+      {GlobalKey<State<StatefulWidget>> stateKey}) {
     return Placeholder(
       color: map.containsKey('color')
           ? parseHexColor(map['color'])
@@ -17,7 +21,4 @@ class PlaceholderWidgetParser extends WidgetParser {
           map.containsKey('fallbackHeight') ? map['fallbackHeight'] : 400.0,
     );
   }
-
-  @override
-  String get widgetName => "Placeholder";
 }
