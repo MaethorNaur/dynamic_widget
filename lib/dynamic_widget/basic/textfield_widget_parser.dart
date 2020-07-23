@@ -13,7 +13,8 @@ class TextFieldWidgetParser extends WidgetParser {
     TextInputType keyboardType = map.containsKey('keyboardType')
         ? getKeyboardType(map['keyboardType'])
         : TextInputType.text;
-    bool obscureText = map['obscureText'];
+    bool obscureText =
+        map.containsKey('obscureText') ? map['obscureText'] as bool : false;
     int maxLines = map['maxLines'];
 
     var validators;

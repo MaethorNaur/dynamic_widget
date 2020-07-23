@@ -80,7 +80,7 @@ class DynamicWidgetBuilder {
   // use this method for adding your custom widget parser
   static void addParser(WidgetParser parser) {
     log.info(
-        "add custom widget parser, make sure you don't overwirte the widget type.");
+        "add custom widget parser, make sure you don't overwrite the widget type.");
     _parsers.add(parser);
     _widgetNameParserMap[parser.widgetName] = parser;
   }
@@ -94,12 +94,12 @@ class DynamicWidgetBuilder {
     }
   }
 
+  //This method is the entry point for the parser.
   static Widget build(
       String json, BuildContext buildContext, ClickListener listener) {
     initDefaultParsersIfNess();
     var map = jsonDecode(json);
-    ClickListener _listener =
-        listener == null ? new NonResponseWidgetClickListener() : listener;
+    ClickListener _listener = listener ?? new NonResponseWidgetClickListener();
     var widget = buildFromMap(map, buildContext, _listener);
     return widget;
   }
