@@ -17,6 +17,38 @@ var containerJson = '''
 
 ''';
 
+var customRefyneJson = ''' 
+
+{
+  "type": "Stack",
+  "children":[
+    {
+      "type": "Container",
+      "height": 120.0,
+      "color": "#204866"
+    },
+    {
+      "type": "Container",
+      "margin": "0,12,0,0",
+      "child":{
+        "type": "Container",
+        "dynamicWidth": 1.0,
+        "dynamicHeight": 0.78,
+        "decoration": {
+          "color": "#FFFFFF",
+          "borderRadius": "24,24,24,24",
+          "boxShadow": {
+            "color": "#EBEFF5",
+            "offset": "0,3"
+          }
+        }
+      }
+    }
+  ]
+}
+
+''';
+
 var textJson = '''
 {
   "type": "Container",

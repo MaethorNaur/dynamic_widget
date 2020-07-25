@@ -300,7 +300,7 @@ BoxShadow parseBoxShadow(Map<String, dynamic> mapOfBoxShadow) {
 
   return BoxShadow(
     color: color,
-    spreadRadius: spreadRadius,
+    spreadRadius: spreadRadius ?? 0.0,
     blurRadius: blurRadius ?? 0.0,
     offset: offset ?? Offset(0, 0),
   );

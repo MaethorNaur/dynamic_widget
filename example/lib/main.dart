@@ -90,6 +90,16 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             RaisedButton(
+              child: Text("Refyne"),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            CodeEditorPage(customRefyneJson)));
+              },
+            ),
+            RaisedButton(
               child: Text("Row"),
               onPressed: () {
                 Navigator.push(
