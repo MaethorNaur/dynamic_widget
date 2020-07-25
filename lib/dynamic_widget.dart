@@ -1,6 +1,7 @@
 library dynamic_widget;
 
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dynamic_widget/dynamic_widget/basic/align_widget_parser.dart';
 import 'package:dynamic_widget/dynamic_widget/basic/aspectratio_widget_parser.dart';
@@ -31,6 +32,7 @@ import 'package:dynamic_widget/dynamic_widget/eventhandler/click_event.dart';
 import 'package:dynamic_widget/dynamic_widget/scrolling/gridview_widget_parser.dart';
 import 'package:dynamic_widget/dynamic_widget/scrolling/listview_widget_parser.dart';
 import 'package:dynamic_widget/dynamic_widget/scrolling/pageview_widget_parser.dart';
+import 'package:dynamic_widget/dynamic_widget/scrolling/singlechildscrollview_widget_parser.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:logging/logging.dart';
@@ -41,7 +43,9 @@ class DynamicWidgetBuilder {
   static final Logger log = Logger('DynamicWidget');
 
   static final _parsers = [
+    SingleChildScrollViewParser(),
     ContainerWidgetParser(),
+    SizedBoxWidgetParser(),
     TextWidgetParser(),
     FormBuilderWidgetParser(),
     TextFieldWidgetParser(),
@@ -66,7 +70,6 @@ class DynamicWidgetBuilder {
     PositionedWidgetParser(),
     IndexedStackWidgetParser(),
     ExpandedSizedBoxWidgetParser(),
-    SizedBoxWidgetParser(),
     OpacityWidgetParser(),
     WrapWidgetParser(),
     DropCapTextParser(),
@@ -105,7 +108,8 @@ class DynamicWidgetBuilder {
     var map = jsonDecode(json);
     ClickEventListener _listener =
         listener ?? new NonResponseWidgetClickListener();
-    var widget = buildFromMap<T>(map, buildContext, _listener, stateKey: stateKey);
+    var widget =
+        buildFromMap<T>(map, buildContext, _listener, stateKey: stateKey);
     return widget;
   }
 
@@ -119,8 +123,7 @@ class DynamicWidgetBuilder {
     if (parser != null) {
       return parser.parse(map, buildContext, listener, stateKey: stateKey);
     }
-    log.warning("Not support type: $widgetName");
-    return null;
+    else throw StdoutException("check name of type or add into list");
   }
 
   static List<Widget> buildWidgets<T extends State<StatefulWidget>>(

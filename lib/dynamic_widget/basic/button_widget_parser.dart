@@ -34,6 +34,10 @@ class RaisedButtonParser extends WidgetParser {
           : null,
       textColor:
           map.containsKey('textColor') ? parseHexColor(map['textColor']) : null,
+      shape: map.containsKey('shape')
+          ? RoundedRectangleBorder(
+              borderRadius: parseBorderRadius(map['shape']))
+          : null,
       child: DynamicWidgetBuilder.buildFromMap(
           map['child'], buildContext, listener,
           stateKey: stateKey),

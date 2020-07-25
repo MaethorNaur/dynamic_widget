@@ -61,7 +61,7 @@ class TextFieldWidgetParser extends WidgetParser {
   getInputDecoration(Map<String, dynamic> map) {
     String labelText = map['labelText'];
     String prefixText = map['prefixText'];
-    return InputDecoration(labelText: labelText, prefixText: prefixText ?? '');
+    return InputDecoration(labelText: labelText, prefixText: prefixText);
   }
 
   LengthLimitingTextInputFormatter getLengthLimitingTextInputFormatter(

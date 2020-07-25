@@ -26,12 +26,20 @@ class SizedBoxWidgetParser extends WidgetParser {
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
       ClickEventListener listener,
       {GlobalKey<State<StatefulWidget>> stateKey}) {
+    Map<String, dynamic> childMap = map['child'];
+    Widget child = childMap == null
+        ? null
+        : DynamicWidgetBuilder.buildFromMap(childMap, buildContext, listener,
+            stateKey: stateKey);
+
     return SizedBox(
-      width: map["width"],
-      height: map["height"],
-      child: DynamicWidgetBuilder.buildFromMap(
-          map["child"], buildContext, listener,
-          stateKey: stateKey),
+      width: map.containsKey('dynamicWidth')
+          ? MediaQuery.of(buildContext).size.width * map['dynamicWidth']
+          : map['width'],
+      height: map.containsKey('dynamicHeight')
+          ? MediaQuery.of(buildContext).size.height * map['dynamicHeight']
+          : map['height'],
+      child: child,
     );
   }
 }
