@@ -4,9 +4,64 @@ import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class TextFieldWidgetParser extends WidgetParser {
+  @override
+  String get widgetName => 'TextField';
+
+  @override
+  Widget parse(Map<String, dynamic> map, BuildContext buildContext,
+      ClickEventListener listener,
+      {GlobalKey<State<StatefulWidget>> stateKey}) {
+    String attribute = map['attribute'];
+    String initialValue = map['initialValue'];
+    TextInputType keyboardType = map.containsKey('keyboardType')
+        ? getKeyboardType(map['keyboardType'])
+        : TextInputType.text;
+    bool obscureText =
+        map.containsKey('obscureText') ? map['obscureText'] as bool : false;
+    int maxLines = map['maxLines'];
+
+    var validators;
+    if (map.containsKey('validators')) {
+      validators = getValidators(map['validators']);
+    }
+
+    TextInputAction textInputAction;
+    if (map.containsKey('textInputAction')) {
+      textInputAction = getTextInputAction(map['textInputAction']);
+    }
+
+    LengthLimitingTextInputFormatter lengthLimitingTextInputFormatter;
+    if (map.containsKey('validators')) {
+      lengthLimitingTextInputFormatter =
+          getLengthLimitingTextInputFormatter(map['validators']);
+    }
+
+    InputDecoration inputDecoration;
+    if (map.containsKey('inputDecoration')) {
+      inputDecoration = getInputDecoration(map['inputDecoration']);
+    }
+
+    return FormBuilderTextField(
+      initialValue: initialValue ?? '',
+      attribute: attribute ?? null,
+      textInputAction: textInputAction ?? TextInputAction.next,
+      keyboardType: keyboardType ?? TextInputType.text,
+      decoration: inputDecoration ?? InputDecoration(labelText: null),
+      validators: validators ??
+          [
+            FormBuilderValidators.minLength(3),
+            FormBuilderValidators.maxLength(100),
+          ],
+      obscureText: obscureText ?? false,
+      maxLines: maxLines ?? 1,
+      onFieldSubmitted: (_) => FocusScope.of(buildContext).nextFocus(),
+    );
+  }
+
   getInputDecoration(Map<String, dynamic> map) {
     String labelText = map['labelText'];
-    return InputDecoration(labelText: labelText);
+    String prefixText = map['prefixText'];
+    return InputDecoration(labelText: labelText, prefixText: prefixText ?? '');
   }
 
   LengthLimitingTextInputFormatter getLengthLimitingTextInputFormatter(
@@ -77,60 +132,6 @@ class TextFieldWidgetParser extends WidgetParser {
       default:
         return TextInputAction.next;
     }
-  }
-
-  @override
-  String get widgetName => 'TextField';
-
-  @override
-  Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickEventListener listener,
-      {GlobalKey<State<StatefulWidget>> stateKey}) {
-    String attribute = map['attribute'];
-    String initialValue = map['initialValue'];
-    TextInputType keyboardType = map.containsKey('keyboardType')
-        ? getKeyboardType(map['keyboardType'])
-        : TextInputType.text;
-    bool obscureText =
-        map.containsKey('obscureText') ? map['obscureText'] as bool : false;
-    int maxLines = map['maxLines'];
-
-    var validators;
-    if (map.containsKey('validators')) {
-      validators = getValidators(map['validators']);
-    }
-
-    TextInputAction textInputAction;
-    if (map.containsKey('textInputAction')) {
-      textInputAction = getTextInputAction(map['textInputAction']);
-    }
-
-    LengthLimitingTextInputFormatter lengthLimitingTextInputFormatter;
-    if (map.containsKey('validators')) {
-      lengthLimitingTextInputFormatter =
-          getLengthLimitingTextInputFormatter(map['validators']);
-    }
-
-    InputDecoration inputDecoration;
-    if (map.containsKey('inputDecoration')) {
-      inputDecoration = getInputDecoration(map['inputDecoration']);
-    }
-
-    return FormBuilderTextField(
-      initialValue: initialValue ?? '',
-      attribute: attribute ?? null,
-      textInputAction: textInputAction ?? TextInputAction.next,
-      keyboardType: keyboardType ?? TextInputType.text,
-      decoration: inputDecoration ?? InputDecoration(labelText: null),
-      validators: validators ??
-          [
-            FormBuilderValidators.minLength(3),
-            FormBuilderValidators.maxLength(100),
-          ],
-      obscureText: obscureText ?? false,
-      maxLines: maxLines ?? 1,
-      onFieldSubmitted: (_) => FocusScope.of(buildContext).nextFocus(),
-    );
   }
 }
 
