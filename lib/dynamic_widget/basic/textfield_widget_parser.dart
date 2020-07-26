@@ -54,6 +54,9 @@ class TextFieldWidgetParser extends WidgetParser {
           ],
       obscureText: obscureText ?? false,
       maxLines: maxLines ?? 1,
+      inputFormatters: [
+        lengthLimitingTextInputFormatter,
+      ],
       onFieldSubmitted: _getOnFieldSubmitted(buildContext, textInputAction),
     );
   }
