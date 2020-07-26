@@ -54,8 +54,21 @@ class TextFieldWidgetParser extends WidgetParser {
           ],
       obscureText: obscureText ?? false,
       maxLines: maxLines ?? 1,
-      onFieldSubmitted: (_) => FocusScope.of(buildContext).nextFocus(),
+      onFieldSubmitted: _getOnFieldSubmitted(buildContext, textInputAction),
     );
+  }
+
+  _getOnFieldSubmitted(
+      BuildContext buildContext, TextInputAction textInputAction) {
+    switch (textInputAction) {
+      case TextInputAction.next:
+      case TextInputAction.continueAction:
+        return (_) => FocusScope.of(buildContext).nextFocus();
+      case TextInputAction.previous:
+        return (_) => FocusScope.of(buildContext).previousFocus();
+      default:
+        return (_) => FocusScope.of(buildContext).dispose();
+    }
   }
 
   getInputDecoration(Map<String, dynamic> map) {

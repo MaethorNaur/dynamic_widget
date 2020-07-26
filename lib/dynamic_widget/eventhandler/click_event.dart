@@ -22,10 +22,12 @@ _parseEventType(String eventType) {
     case "VALIDATE":
     case "validate":
       return EventType.VALIDATE;
+      break;
     case "NAVIGATE":
     case "navigate":
       return EventType.NAVIGATE;
+      break;
     default:
-      return EventType.NOT_DEFINED;
+      return EventType.VALIDATE;
   }
 }
