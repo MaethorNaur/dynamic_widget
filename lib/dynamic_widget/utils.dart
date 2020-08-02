@@ -719,7 +719,7 @@ DropCapPosition parseDropCapPosition(String value) {
 }
 
 DropCap parseDropCap(Map<String, dynamic> map, BuildContext buildContext,
-    ClickEventListener listener) {
+    EventListener listener) {
   return DropCap(
     width: map['width'],
     height: map['height'],

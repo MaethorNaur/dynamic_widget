@@ -1,5 +1,5 @@
 import 'package:dynamic_widget/dynamic_widget.dart';
-import 'package:dynamic_widget/dynamic_widget/eventhandler/click_event.dart';
+import 'package:dynamic_widget/dynamic_widget/eventhandler/event.dart';
 import 'package:dynamic_widget/dynamic_widget/utils.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -10,13 +10,12 @@ class SelectableTextWidgetParser implements WidgetParser {
 
   @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickEventListener listener,
+      EventListener listener,
       {GlobalKey<State<StatefulWidget>> stateKey}) {
     String data = map['data'];
     String textAlignString = map['textAlign'];
     int maxLines = map['maxLines'];
     String textDirectionString = map['textDirection'];
-//    double textScaleFactor = map['textScaleFactor'];
     var textSpan;
     var textSpanParser = SelectableTextSpanParser();
     if (map.containsKey("textSpan")) {
@@ -30,7 +29,6 @@ class SelectableTextWidgetParser implements WidgetParser {
         maxLines: maxLines,
         textDirection: parseTextDirection(textDirectionString),
         style: map.containsKey('style') ? parseTextStyle(map['style']) : null,
-//        textScaleFactor: textScaleFactor,
       );
     } else {
       return SelectableText.rich(
@@ -39,23 +37,22 @@ class SelectableTextWidgetParser implements WidgetParser {
         maxLines: maxLines,
         textDirection: parseTextDirection(textDirectionString),
         style: map.containsKey('style') ? parseTextStyle(map['style']) : null,
-//        textScaleFactor: textScaleFactor,
       );
     }
   }
 }
 
 class SelectableTextSpanParser {
-  TextSpan parse(Map<String, dynamic> map, ClickEventListener listener) {
-    ClickEvent clickEvent = map.containsKey("clickEvent")
-        ? ClickEvent.fromJson(map['clickEvent'])
-        : ClickEvent(EventType.NOT_DEFINED);
+  TextSpan parse(Map<String, dynamic> map, EventListener listener) {
+    Event clickEvent = map.containsKey("clickEvent")
+        ? Event.fromJson(map['clickEvent'])
+        : Event(EventType.NOT_DEFINED);
     var textSpan = TextSpan(
         text: map['text'],
         style: parseTextStyle(map['style']),
         recognizer: TapGestureRecognizer()
           ..onTap = () {
-            listener.onClicked(clickEvent);
+            listener.onTriggered(clickEvent);
           },
         children: []);
 
@@ -67,7 +64,7 @@ class SelectableTextSpanParser {
   }
 
   void parseChildren(TextSpan textSpan, List<dynamic> childrenSpan,
-      ClickEventListener listener) {
+      EventListener listener) {
     for (var childmap in childrenSpan) {
       textSpan.children.add(parse(childmap, listener));
     }

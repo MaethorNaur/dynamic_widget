@@ -8,7 +8,7 @@ class IndexedStackWidgetParser extends WidgetParser {
 
   @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickEventListener listener,
+      EventListener listener,
       {GlobalKey<State<StatefulWidget>> stateKey}) {
     return IndexedStack(
       index: map.containsKey("index") ? map["index"] : 0,

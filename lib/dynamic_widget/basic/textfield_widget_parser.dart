@@ -9,7 +9,7 @@ class TextFieldWidgetParser extends WidgetParser {
 
   @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickEventListener listener,
+      EventListener listener,
       {GlobalKey<State<StatefulWidget>> stateKey}) {
     String attribute = map['attribute'];
     String initialValue = map['initialValue'];

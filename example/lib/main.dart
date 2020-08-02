@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:dynamic_widget/dynamic_widget.dart';
-import 'package:dynamic_widget/dynamic_widget/eventhandler/click_event.dart';
+import 'package:dynamic_widget/dynamic_widget/eventhandler/event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
@@ -454,22 +454,25 @@ class PreviewPageState extends State<PreviewPage> {
   }
 }
 
-class DefaultClickListener implements ClickEventListener {
+class DefaultClickListener implements EventListener {
   GlobalKey<FormBuilderState> fbKey;
 
   DefaultClickListener(this.fbKey);
 
   @override
-  void onClicked(ClickEvent event) {
+  void onTriggered(Event event) {
     _handleClickEvent(event);
   }
 
-  _handleClickEvent(ClickEvent clickEvent) async {
+  _handleClickEvent(Event clickEvent) async {
     switch (clickEvent.eventType) {
-      case EventType.VALIDATE:
+      case EventType.CLICK:
         if (fbKey.currentState.saveAndValidate()) {
           print(fbKey.currentState.value['name']);
         }
+        break;
+      default:
+        print(clickEvent.eventType);
         break;
     }
 

@@ -7,7 +7,7 @@ class OpacityWidgetParser extends WidgetParser {
 
   @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickEventListener listener,
+      EventListener listener,
       {GlobalKey<State<StatefulWidget>> stateKey}) {
     return Opacity(
       opacity: map["opacity"],

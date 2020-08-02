@@ -10,7 +10,7 @@ class IconWidgetParser extends WidgetParser {
   String get widgetName => "Icon";
 
   @override
-  Widget parse(Map<String, dynamic> map, BuildContext buildContext, ClickEventListener listener, {GlobalKey<State<StatefulWidget>> stateKey}) {
+  Widget parse(Map<String, dynamic> map, BuildContext buildContext, EventListener listener, {GlobalKey<State<StatefulWidget>> stateKey}) {
     return Icon(
       map.containsKey('data')
           ? getIconUsingPrefix(name: map['data'])

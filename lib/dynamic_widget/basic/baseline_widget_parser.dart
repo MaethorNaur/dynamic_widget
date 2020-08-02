@@ -7,7 +7,7 @@ class BaselineWidgetParser extends WidgetParser {
 
   @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickEventListener listener,
+      EventListener listener,
       {GlobalKey<State<StatefulWidget>> stateKey}) {
     return Baseline(
       baseline: map["baseline"],

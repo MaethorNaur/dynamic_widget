@@ -8,7 +8,7 @@ class RowWidgetParser extends WidgetParser {
 
   @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickEventListener listener,
+      EventListener listener,
       {GlobalKey<State<StatefulWidget>> stateKey}) {
     return Row(
       crossAxisAlignment: map.containsKey('crossAxisAlignment')
@@ -42,7 +42,7 @@ class ColumnWidgetParser extends WidgetParser {
 
   @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickEventListener listener,
+      EventListener listener,
       {GlobalKey<State<StatefulWidget>> stateKey}) {
     return Column(
       crossAxisAlignment: map.containsKey('crossAxisAlignment')

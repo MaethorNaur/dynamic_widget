@@ -8,7 +8,7 @@ class PositionedWidgetParser extends WidgetParser {
 
   @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickEventListener listener,
+      EventListener listener,
       {GlobalKey<State<StatefulWidget>> stateKey}) {
     return Positioned(
       child: DynamicWidgetBuilder.buildFromMap(
@@ -30,7 +30,7 @@ class StackWidgetParser extends WidgetParser {
 
   @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickEventListener listener,
+      EventListener listener,
       {GlobalKey<State<StatefulWidget>> stateKey}) {
     return Stack(
       alignment: map.containsKey("alignment")

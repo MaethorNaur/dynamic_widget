@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class SingleChildScrollViewParser extends WidgetParser {
   @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickEventListener listener,
+      EventListener listener,
       {GlobalKey<State<StatefulWidget>> stateKey}) {
     var scrollDirection = Axis.vertical;
     if (map.containsKey("scrollDirection") &&

@@ -7,7 +7,7 @@ class CenterWidgetParser extends WidgetParser {
 
   @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickEventListener listener,
+      EventListener listener,
       {GlobalKey<State<StatefulWidget>> stateKey}) {
     return Center(
       widthFactor: map.containsKey("widthFactor") ? map["widthFactor"] : null,

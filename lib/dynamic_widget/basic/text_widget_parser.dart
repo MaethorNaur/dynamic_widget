@@ -1,5 +1,5 @@
 import 'package:dynamic_widget/dynamic_widget.dart';
-import 'package:dynamic_widget/dynamic_widget/eventhandler/click_event.dart';
+import 'package:dynamic_widget/dynamic_widget/eventhandler/event.dart';
 import 'package:dynamic_widget/dynamic_widget/utils.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
@@ -10,7 +10,7 @@ class TextWidgetParser implements WidgetParser {
 
   @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickEventListener listener,
+      EventListener listener,
       {GlobalKey<State<StatefulWidget>> stateKey}) {
     String data = map['data'];
     String textAlignString = map['textAlign'];
@@ -55,16 +55,16 @@ class TextWidgetParser implements WidgetParser {
 }
 
 class TextSpanParser {
-  TextSpan parse(Map<String, dynamic> map, ClickEventListener listener) {
-    ClickEvent clickEvent = map.containsKey("clickEvent")
-        ? ClickEvent.fromJson(map['clickEvent'])
-        : ClickEvent(EventType.NOT_DEFINED);
+  TextSpan parse(Map<String, dynamic> map, EventListener listener) {
+    Event clickEvent = map.containsKey("clickEvent")
+        ? Event.fromJson(map['clickEvent'])
+        : Event(EventType.NOT_DEFINED);
     var textSpan = TextSpan(
         text: map['text'],
         style: parseTextStyle(map['style']),
         recognizer: TapGestureRecognizer()
           ..onTap = () {
-            listener.onClicked(clickEvent);
+            listener.onTriggered(clickEvent);
           },
         children: []);
 
@@ -76,7 +76,7 @@ class TextSpanParser {
   }
 
   void parseChildren(TextSpan textSpan, List<dynamic> childrenSpan,
-      ClickEventListener listener) {
+      EventListener listener) {
     for (var childmap in childrenSpan) {
       textSpan.children.add(parse(childmap, listener));
     }

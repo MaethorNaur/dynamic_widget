@@ -1,5 +1,5 @@
 import 'package:dynamic_widget/dynamic_widget.dart';
-import 'package:dynamic_widget/dynamic_widget/eventhandler/click_event.dart';
+import 'package:dynamic_widget/dynamic_widget/eventhandler/event.dart';
 import 'package:dynamic_widget/dynamic_widget/utils.dart';
 import 'package:flutter/material.dart';
 
@@ -9,11 +9,11 @@ class RaisedButtonParser extends WidgetParser {
 
   @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickEventListener listener,
+      EventListener listener,
       {GlobalKey<State<StatefulWidget>> stateKey}) {
-    ClickEvent clickEvent = map.containsKey("clickEvent")
-        ? ClickEvent.fromJson(map['clickEvent'])
-        : ClickEvent(EventType.NOT_DEFINED);
+    Event clickEvent = map.containsKey("event")
+        ? Event.fromJson(map['event'])
+        : Event(EventType.NOT_DEFINED);
 
     var raisedButton = RaisedButton(
       color: map.containsKey('color') ? parseHexColor(map['color']) : null,
@@ -42,7 +42,7 @@ class RaisedButtonParser extends WidgetParser {
           map['child'], buildContext, listener,
           stateKey: stateKey),
       onPressed: () {
-        listener.onClicked(clickEvent);
+        listener.onTriggered(clickEvent);
       },
     );
 

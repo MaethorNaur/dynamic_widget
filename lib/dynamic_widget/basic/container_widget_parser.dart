@@ -1,5 +1,5 @@
 import 'package:dynamic_widget/dynamic_widget.dart';
-import 'package:dynamic_widget/dynamic_widget/eventhandler/click_event.dart';
+import 'package:dynamic_widget/dynamic_widget/eventhandler/event.dart';
 import 'package:dynamic_widget/dynamic_widget/utils.dart';
 import 'package:flutter/widgets.dart';
 
@@ -9,12 +9,11 @@ class ContainerWidgetParser extends WidgetParser {
 
   @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickEventListener listener,
+      EventListener listener,
       {GlobalKey<State<StatefulWidget>> stateKey}) {
     Alignment alignment = parseAlignment(map['alignment']);
     Color color = parseHexColor(map['color']);
     BoxConstraints constraints = parseBoxConstraints(map['constraints']);
-    //TODO: transform properties to be implemented.
     EdgeInsetsGeometry margin = parseEdgeInsetsGeometry(map['margin']);
     EdgeInsetsGeometry padding = parseEdgeInsetsGeometry(map['padding']);
 
@@ -29,9 +28,9 @@ class ContainerWidgetParser extends WidgetParser {
         : DynamicWidgetBuilder.buildFromMap(childMap, buildContext, listener,
             stateKey: stateKey);
 
-    ClickEvent clickEvent = map.containsKey("clickEvent")
-        ? ClickEvent.fromJson(map['clickEvent'])
-        : ClickEvent(EventType.NOT_DEFINED);
+    Event clickEvent = map.containsKey("clickEvent")
+        ? Event.fromJson(map['clickEvent'])
+        : Event(EventType.NOT_DEFINED);
 
     var containerWidget = Container(
       alignment: alignment,
@@ -53,7 +52,7 @@ class ContainerWidgetParser extends WidgetParser {
     if (listener != null && clickEvent != null) {
       return GestureDetector(
         onTap: () {
-          listener.onClicked(clickEvent);
+          listener.onTriggered(clickEvent);
         },
         child: containerWidget,
       );

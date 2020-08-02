@@ -8,7 +8,7 @@ class ExpandedSizedBoxWidgetParser extends WidgetParser {
 
   @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickEventListener listener,
+      EventListener listener,
       {GlobalKey<State<StatefulWidget>> stateKey}) {
     return SizedBox.expand(
       child: DynamicWidgetBuilder.buildFromMap(
@@ -24,7 +24,7 @@ class SizedBoxWidgetParser extends WidgetParser {
 
   @override
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
-      ClickEventListener listener,
+      EventListener listener,
       {GlobalKey<State<StatefulWidget>> stateKey}) {
     Map<String, dynamic> childMap = map['child'];
     Widget child = childMap == null
