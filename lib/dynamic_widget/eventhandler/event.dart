@@ -6,7 +6,7 @@ class Event {
   Event(this.eventType, {this.uri, this.onFinish});
 
   static Event fromJson(Map<String, dynamic> json) {
-    var eventType = _parseEventType(json['eventType']);
+    var eventType = _parseEventType(json['type']);
     var uri = json.containsKey('uri') ? json['uri'] : null;
     var onFinish =
         json.containsKey('onFinish') ? Event.fromJson(json['onFinish']) : null;
