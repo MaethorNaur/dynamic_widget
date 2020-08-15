@@ -34,11 +34,11 @@ class SizedBoxWidgetParser extends WidgetParser {
 
     return SizedBox(
       width: map.containsKey('dynamicWidth')
-          ? MediaQuery.of(buildContext).size.width * map['dynamicWidth']
-          : map['width'],
+          ? MediaQuery.of(buildContext).size.width * map['dynamicWidth']?.toDouble()
+          : map['width']?.toDouble(),
       height: map.containsKey('dynamicHeight')
-          ? MediaQuery.of(buildContext).size.height * map['dynamicHeight']
-          : map['height'],
+          ? MediaQuery.of(buildContext).size.height * map['dynamicHeight']?.toDouble()
+          : map['height']?.toDouble(),
       child: child,
     );
   }

@@ -2,6 +2,7 @@ import 'package:dynamic_widget/dynamic_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:dynamic_widget/dynamic_widget/eventhandler/event.dart';
 
 class TextFieldWidgetParser extends WidgetParser {
   @override
@@ -47,22 +48,21 @@ class TextFieldWidgetParser extends WidgetParser {
       textInputAction: textInputAction ?? TextInputAction.next,
       keyboardType: keyboardType ?? TextInputType.text,
       decoration: inputDecoration ?? InputDecoration(labelText: null),
-      validators: validators ??
-          [
-            FormBuilderValidators.minLength(3),
-            FormBuilderValidators.maxLength(100),
-          ],
+      validators: validators,
       obscureText: obscureText ?? false,
       maxLines: maxLines ?? 1,
       inputFormatters: [
         lengthLimitingTextInputFormatter,
       ],
-      onFieldSubmitted: _getOnFieldSubmitted(buildContext, textInputAction),
+      onChanged: (value) => listener
+          .onTriggered(Event(EventType.CHANGE, data: value, onFinish: null)),
+      onFieldSubmitted:
+          _getOnFieldSubmitted(listener, buildContext, textInputAction),
     );
   }
 
-  _getOnFieldSubmitted(
-      BuildContext buildContext, TextInputAction textInputAction) {
+  _getOnFieldSubmitted(EventListener listener, BuildContext buildContext,
+      TextInputAction textInputAction) {
     switch (textInputAction) {
       case TextInputAction.next:
       case TextInputAction.continueAction:
@@ -75,9 +75,13 @@ class TextFieldWidgetParser extends WidgetParser {
   }
 
   getInputDecoration(Map<String, dynamic> map) {
-    String labelText = map['labelText'];
-    String prefixText = map['prefixText'];
-    return InputDecoration(labelText: labelText, prefixText: prefixText);
+    if (map.containsKey("collapsed")) {
+      return InputDecoration.collapsed(hintText: map["collapsed"]);
+    } else {
+      String labelText = map['labelText'];
+      String prefixText = map['prefixText'];
+      return InputDecoration(labelText: labelText, prefixText: prefixText);
+    }
   }
 
   LengthLimitingTextInputFormatter getLengthLimitingTextInputFormatter(
