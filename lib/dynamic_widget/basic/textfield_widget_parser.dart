@@ -31,38 +31,30 @@ class TextFieldWidgetParser extends WidgetParser {
       textInputAction = getTextInputAction(map['textInputAction']);
     }
 
-    LengthLimitingTextInputFormatter lengthLimitingTextInputFormatter;
-    if (map.containsKey('validators')) {
-      lengthLimitingTextInputFormatter =
-          getLengthLimitingTextInputFormatter(map['validators']);
-    }
-
     InputDecoration inputDecoration;
     if (map.containsKey('inputDecoration')) {
       inputDecoration = getInputDecoration(map['inputDecoration']);
     }
 
-    return FormBuilderTextField(
-      initialValue: initialValue ?? '',
-      attribute: attribute ?? null,
+    return TextField(
       textInputAction: textInputAction ?? TextInputAction.next,
       keyboardType: keyboardType ?? TextInputType.text,
       decoration: inputDecoration ?? InputDecoration(labelText: null),
-      validators: validators,
       obscureText: obscureText ?? false,
       maxLines: maxLines ?? 1,
-      inputFormatters: [
-        lengthLimitingTextInputFormatter,
-      ],
-      onChanged: (value) => listener
-          .onTriggered(Event(EventType.CHANGE, data: value, onFinish: null)),
-      onFieldSubmitted:
-          _getOnFieldSubmitted(listener, buildContext, textInputAction),
+      onChanged: (value) => listener.onTriggered(
+        Event(
+          EventType.CHANGE,
+          data: Map.fromIterables([map['data']], [value]),
+          onFinish: null,
+        ),
+      ),
+      onSubmitted: _getOnFieldSubmitted(buildContext, textInputAction),
     );
   }
 
-  _getOnFieldSubmitted(EventListener listener, BuildContext buildContext,
-      TextInputAction textInputAction) {
+  _getOnFieldSubmitted(
+      BuildContext buildContext, TextInputAction textInputAction) {
     switch (textInputAction) {
       case TextInputAction.next:
       case TextInputAction.continueAction:
