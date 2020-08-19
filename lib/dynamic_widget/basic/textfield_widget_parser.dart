@@ -12,19 +12,12 @@ class TextFieldWidgetParser extends WidgetParser {
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
       EventListener listener,
       {GlobalKey<State<StatefulWidget>> stateKey}) {
-    String attribute = map['attribute'];
-    String initialValue = map['initialValue'];
     TextInputType keyboardType = map.containsKey('keyboardType')
         ? getKeyboardType(map['keyboardType'])
         : TextInputType.text;
     bool obscureText =
         map.containsKey('obscureText') ? map['obscureText'] as bool : false;
     int maxLines = map['maxLines'];
-
-    var validators;
-    if (map.containsKey('validators')) {
-      validators = getValidators(map['validators']);
-    }
 
     TextInputAction textInputAction;
     if (map.containsKey('textInputAction')) {
@@ -45,20 +38,37 @@ class TextFieldWidgetParser extends WidgetParser {
       onChanged: (value) => listener.onTriggered(
         Event(
           EventType.CHANGE,
-          data: Map.fromIterables([map['data']], [value]),
+          data: {map['data']: value},
           onFinish: null,
         ),
       ),
-      onSubmitted: _getOnFieldSubmitted(buildContext, textInputAction),
+      onSubmitted: _getOnFieldSubmitted(
+        map['data'],
+        listener: listener,
+        buildContext: buildContext,
+        textInputAction: textInputAction,
+      ),
     );
   }
 
-  _getOnFieldSubmitted(
-      BuildContext buildContext, TextInputAction textInputAction) {
+  _getOnFieldSubmitted(String field,
+      {EventListener listener,
+      BuildContext buildContext,
+      TextInputAction textInputAction}) {
     switch (textInputAction) {
       case TextInputAction.next:
       case TextInputAction.continueAction:
-        return (_) => FocusScope.of(buildContext).nextFocus();
+        return (value) {
+          listener.onTriggered(
+            Event(
+              EventType.CHANGE,
+              data: {field: value},
+              onFinish: null,
+            ),
+          );
+          return FocusScope.of(buildContext).nextFocus();
+        };
+
       case TextInputAction.previous:
         return (_) => FocusScope.of(buildContext).previousFocus();
       default:
