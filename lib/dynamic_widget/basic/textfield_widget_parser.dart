@@ -1,7 +1,6 @@
 import 'package:dynamic_widget/dynamic_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:dynamic_widget/dynamic_widget/eventhandler/event.dart';
 
 class TextFieldWidgetParser extends WidgetParser {
@@ -95,27 +94,6 @@ class TextFieldWidgetParser extends WidgetParser {
     return null;
   }
 
-  List<ValidatorType> getValidators(Map<String, dynamic> validatorMap) {
-    var validators = List<ValidatorType>();
-    if (validatorMap.containsKey('minLength')) {
-      int minLength = validatorMap['minLength'];
-      String errorText = validatorMap['minLengthErrorText'];
-      validators.add(
-          FormBuilderValidators.minLength(minLength, errorText: errorText));
-    }
-    if (validatorMap.containsKey('maxLength')) {
-      int maxLength = validatorMap['maxLength'];
-      String errorText = validatorMap['maxLengthErrorText'];
-      validators.add(
-          FormBuilderValidators.maxLength(maxLength, errorText: errorText));
-    }
-    if (validatorMap.containsKey('isEmail') && validatorMap['isEmail']) {
-      String errorText = validatorMap['emailErrorText'];
-      validators.add(FormBuilderValidators.email(errorText: errorText));
-    }
-    return validators;
-  }
-
   TextInputType getKeyboardType(String keyboardType) {
     switch (keyboardType) {
       case 'text':
@@ -156,5 +134,3 @@ class TextFieldWidgetParser extends WidgetParser {
     }
   }
 }
-
-typedef String ValidatorType(dynamic);
